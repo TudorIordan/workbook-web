@@ -5,6 +5,7 @@ import { db } from '../data/db';
 import { repo } from '../data/repo';
 import { prStr, setStr } from '../domain/metrics';
 import { useSettingsStore } from '../store/settings';
+import { InstallPrompt } from '../components/InstallPrompt';
 
 export function Summary() {
   const { id } = useParams<{ id: string }>();
@@ -28,7 +29,7 @@ export function Summary() {
   const setCount = session.entries.reduce((a, e) => a + e.sets.length, 0);
 
   return (
-    <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'var(--wb-inv)', color: '#f2ece1', display: 'flex', flexDirection: 'column', padding: '34px 22px 28px', gap: 18, animation: 'wbFade .2s ease' }}>
+    <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'var(--wb-inv)', color: '#f2ece1', display: 'flex', flexDirection: 'column', padding: 'max(34px, calc(env(safe-area-inset-top) + 20px)) 22px max(28px, env(safe-area-inset-bottom))', gap: 18, animation: 'wbFade .2s ease' }}>
       <div>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.12em', color: '#e0a79f' }}>WORKOUT COMPLETE</div>
         <input
@@ -82,6 +83,8 @@ export function Summary() {
           );
         })}
       </div>
+
+      <InstallPrompt tone="dark" />
 
       <button
         onClick={() => navigate('/')}

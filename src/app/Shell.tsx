@@ -96,7 +96,8 @@ export function Shell() {
       {live && <MiniBar />}
       <div style={{
         position: 'absolute', left: 0, right: 0, bottom: 0, display: 'flex',
-        background: 'var(--wb-line)', padding: '8px 8px 14px', boxShadow: '0 -1px 0 rgba(var(--wb-ink-rgb),.07)',
+        background: 'var(--wb-line)', padding: '8px 8px max(14px, env(safe-area-inset-bottom))',
+        boxShadow: '0 -1px 0 rgba(var(--wb-ink-rgb),.07)',
       }}>
         {NAV_ITEMS.map((n) => {
           const active = location.pathname === n.path;

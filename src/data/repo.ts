@@ -125,7 +125,7 @@ export const repo = {
   // ── settings ─────────────────────────────────────────────────────────
   async getSettings(): Promise<Settings> {
     const s = await db.settings.get('settings');
-    return s ?? DEFAULT_SETTINGS;
+    return s ? { ...DEFAULT_SETTINGS, ...s } : DEFAULT_SETTINGS;
   },
   async patchSettings(p: Partial<Settings>): Promise<Settings> {
     const cur = await repo.getSettings();

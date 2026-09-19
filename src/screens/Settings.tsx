@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '../components/Icon';
+import { InstallPrompt } from '../components/InstallPrompt';
+import { usePwaInstall } from '../app/usePwaInstall';
 import { useSettingsStore } from '../store/settings';
 import { repo } from '../data/repo';
 import { mmss } from '../domain/metrics';
@@ -36,10 +38,11 @@ export function SettingsScreen() {
   const navigate = useNavigate();
   const settings = useSettingsStore((s) => s.settings);
   const patch = useSettingsStore((s) => s.patch);
+  const { canInstall, iosHint } = usePwaInstall();
 
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'var(--wb-bg)', color: 'var(--wb-ink)', display: 'flex', flexDirection: 'column', animation: 'wbFade .18s ease' }}>
-      <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ padding: 'max(14px, env(safe-area-inset-top)) 16px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button onClick={() => navigate(-1)} style={{ width: 38, height: 38, borderRadius: '50%', border: 'none', background: 'rgba(var(--wb-ink-rgb),.07)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Icon name="chevron-left" size={18} style={{ strokeWidth: 2.2 } as never} />
         </button>
@@ -70,6 +73,12 @@ export function SettingsScreen() {
           })}
           <div style={{ fontSize: 12, opacity: 0.5, marginTop: 6 }}>Sets are stored in metric and converted for display, so switching never rewrites history.</div>
         </Card>
+
+        {(canInstall || iosHint) && (
+          <Card title="App">
+            <InstallPrompt />
+          </Card>
+        )}
 
         <Card title="Theme">
           <div style={{ display: 'flex', gap: 7 }}>
@@ -140,6 +149,13 @@ export function SettingsScreen() {
               </div>
             </>
           )}
+        </Card>
+
+        <Card title="Live session">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ fontSize: 14, fontWeight: 700 }}>Keep screen awake</div>
+            <Switch on={settings.keepAwake} onToggle={() => patch({ keepAwake: !settings.keepAwake })} />
+          </div>
         </Card>
 
         <div style={{ fontSize: 12, opacity: 0.45, textAlign: 'center' }}>

@@ -15,6 +15,7 @@ import { fieldHead, fieldName, fieldValue, mmss, shortStr } from '../domain/metr
 import { lastSets, recordBadgeKeys, type RecordSource } from '../domain/analytics';
 import type { Exercise, MeasurementType } from '../domain/types';
 import { MEASUREMENTS, PR_FIELD_INDEX } from '../domain/types';
+import { useWakeLock } from '../app/useWakeLock';
 
 function elapsedStr(startedAt: number): string {
   const s = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
@@ -57,6 +58,7 @@ export function LiveSessionScreen() {
   const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => { void tick; }, [tick]);
+  useWakeLock(settings.keepAwake && Boolean(live));
 
   if (!live) {
     navigate('/', { replace: true });
@@ -69,7 +71,7 @@ export function LiveSessionScreen() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 8, display: 'flex', flexDirection: 'column', background: 'var(--wb-bg)', color: 'var(--wb-ink)' }}>
-      <div style={{ background: 'var(--wb-inv)', color: '#f2ece1', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, flex: 'none' }}>
+      <div style={{ background: 'var(--wb-inv)', color: '#f2ece1', padding: 'max(14px, env(safe-area-inset-top)) 16px 14px', display: 'flex', alignItems: 'center', gap: 12, flex: 'none' }}>
         <button
           onClick={() => navigate('/')}
           style={{ width: 34, height: 34, borderRadius: '50%', border: 'none', background: 'rgba(247,242,232,.14)', color: '#f2ece1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}

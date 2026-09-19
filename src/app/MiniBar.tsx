@@ -18,7 +18,8 @@ export function MiniBar() {
     <div
       onClick={() => navigate('/session')}
       style={{
-        position: 'absolute', left: 12, right: 12, bottom: 84, zIndex: 7,
+        position: 'absolute', left: 12, right: 12, zIndex: 7,
+        bottom: 'calc(84px + env(safe-area-inset-bottom))',
         padding: '12px 14px', borderRadius: 22, background: 'var(--wb-inv)', color: '#f2ece1',
         boxShadow: '0 14px 30px rgba(var(--wb-shad-rgb),.3)', cursor: 'pointer',
         display: 'flex', alignItems: 'center', gap: 10,

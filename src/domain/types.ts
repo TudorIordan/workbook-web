@@ -179,6 +179,7 @@ export interface Settings {
   restScope: RestScope;
   restWarmup: boolean;
   weightStepKg: number;
+  keepAwake: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -191,6 +192,7 @@ export const DEFAULT_SETTINGS: Settings = {
   restScope: 'weights',
   restWarmup: false,
   weightStepKg: 2.5,
+  keepAwake: false,
 };
 
 // ── Derived / view types ────────────────────────────────────────────────────

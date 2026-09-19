@@ -56,7 +56,7 @@ export function ExerciseDetail() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 9, background: 'var(--wb-bg)', color: 'var(--wb-ink)', display: 'flex', flexDirection: 'column', animation: 'wbFade .18s ease' }}>
-      <div style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ padding: 'max(14px, env(safe-area-inset-top)) 16px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button onClick={() => navigate(-1)} style={{ width: 36, height: 36, borderRadius: '50%', border: 'none', background: 'var(--wb-line)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Icon name="chevron-left" size={18} style={{ strokeWidth: 2.2 } as never} />
         </button>
